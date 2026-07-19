@@ -226,6 +226,8 @@
   hr.thin{border:none;border-top:1px solid rgba(248,244,236,0.12);margin:28px 0;}
   .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .8s ease;}
   .reveal.is-visible{opacity:1;transform:translateY(0);}
+  .reveal-item{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease;}
+  .reveal-item.is-visible{opacity:1;transform:translateY(0);}
   @media (prefers-reduced-motion: reduce){
     .reveal{opacity:1;transform:none;transition:none;}
     html{scroll-behavior:auto;}
@@ -433,8 +435,19 @@
 </footer>
 
 <script>
-  // Reveal sections on scroll
-  const revealEls = document.querySelectorAll('.reveal');
+  // Tag inner text elements inside each .reveal block for a staggered, per-line reveal
+  const revealBlocks = document.querySelectorAll('.reveal');
+  revealBlocks.forEach(block => {
+    const targets = block.querySelectorAll('h1, h2, h3, p, li, .room, .post-card, .checklist > div, .pattern-list > li');
+    targets.forEach((el, i) => {
+      el.classList.add('reveal-item');
+      el.style.transitionDelay = Math.min(i * 90, 540) + 'ms';
+    });
+  });
+  // Parent blocks become visible immediately; their children handle the staggered animation
+  revealBlocks.forEach(b => { b.style.opacity = 1; b.style.transform = 'none'; b.style.transition = 'none'; });
+
+  const revealItems = document.querySelectorAll('.reveal-item');
   if ('IntersectionObserver' in window) {
     const io = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -443,10 +456,10 @@
           io.unobserve(entry.target);
         }
       });
-    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
-    revealEls.forEach(el => io.observe(el));
+    }, { threshold: 0.12, rootMargin: '0px 0px -60px 0px' });
+    revealItems.forEach(el => io.observe(el));
   } else {
-    revealEls.forEach(el => el.classList.add('is-visible'));
+    revealItems.forEach(el => el.classList.add('is-visible'));
   }
 
   // Subtle parallax on hero blueprint motif
