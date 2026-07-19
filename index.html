@@ -218,6 +218,12 @@
   .foot-links a{text-decoration:none;opacity:0.8;}
   .foot-links a:hover{opacity:1;}
   hr.thin{border:none;border-top:1px solid rgba(248,244,236,0.12);margin:28px 0;}
+  .reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease, transform .8s ease;}
+  .reveal.is-visible{opacity:1;transform:translateY(0);}
+  @media (prefers-reduced-motion: reduce){
+    .reveal{opacity:1;transform:none;transition:none;}
+    html{scroll-behavior:auto;}
+  }
 </style>
 </head>
 <body>
@@ -272,7 +278,7 @@
 </header>
 
 <section class="section-parchment">
-  <div class="wrap approach">
+  <div class="wrap reveal approach">
     <a href="https://www.instagram.com/soul.ser.integral?utm_source=qr&igsh=MXFmaTg5ZGcyeXM2NQ==" target="_blank" rel="noopener">
       <img src="https://static.wixstatic.com/media/e87b7b_09bdafa6d986471eb597ae08470899a0~mv2.jpeg/v1/fill/w_592,h_682,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/e87b7b_09bdafa6d986471eb597ae08470899a0~mv2.jpeg" alt="Carla Miranda">
     </a>
@@ -301,7 +307,7 @@
 </section>
 
 <section class="section-parchment" id="protocolo">
-  <div class="wrap">
+  <div class="wrap reveal">
     <div class="protocol-head">
       <p class="eyebrow">Metatransformação Neurobiológica</p>
       <h2 class="title">Um método, desenvolvido por Carla Miranda, que integra consciência, atualização de emoções e neuroplasticidade — em quatro cômodos de uma mesma casa.</h2>
@@ -329,7 +335,7 @@
 </section>
 
 <section class="section-dusk">
-  <div class="wrap">
+  <div class="wrap reveal">
     <p class="eyebrow">Este trabalho é para você que</p>
     <h2 class="title" style="max-width:600px;">Reconhece o padrão — e está pronto para construir algo novo.</h2>
     <div class="checklist">
@@ -345,7 +351,7 @@
 </section>
 
 <section class="cta-band" id="contato">
-  <div class="wrap">
+  <div class="wrap reveal">
     <h2>Pronto(a) para interromper padrões e construir uma nova realidade interna?</h2>
     <p>Agende uma conversa de orientação e comece sua transformação.</p>
     <a class="btn btn-primary" href="https://wa.me/5561984686911" target="_blank" rel="noopener">📱 WhatsApp (61) 98468-6911</a>
@@ -353,7 +359,7 @@
 </section>
 
 <section class="section-parchment" id="blog">
-  <div class="wrap">
+  <div class="wrap reveal">
     <p class="eyebrow">Conhecimento é poder</p>
     <h2 class="title">Artigos e estudos de caso</h2>
     <div class="blog-grid">
@@ -383,7 +389,7 @@
 </section>
 
 <section class="section-parchment">
-  <div class="wrap">
+  <div class="wrap reveal">
     <p class="eyebrow">Siga-me no Instagram</p>
     <h2 class="title" style="max-width:600px;">@soul.ser.integral</h2>
     <div class="blog-grid">
@@ -401,7 +407,7 @@
 </section>
 
 <section class="section-dusk">
-  <div class="wrap testi">
+  <div class="wrap reveal testi">
     <p class="eyebrow" style="text-align:center;">Feedbacks</p>
     <img src="https://static.wixstatic.com/media/e87b7b_9df646f476b045f3a49602a7119c8bf7~mv2.jpeg/v1/fill/w_600,h_600,al_c,q_80,usm_0.66_1.00_0.01,enc_avif,quality_auto/e87b7b_9df646f476b045f3a49602a7119c8bf7~mv2.jpeg" alt="Depoimento">
     <p>"Um processo que me mostrou que a mudança de verdade começa por dentro."</p>
@@ -434,5 +440,31 @@
   </div>
 </footer>
 
+<script>
+  // Reveal sections on scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+    revealEls.forEach(el => io.observe(el));
+  } else {
+    revealEls.forEach(el => el.classList.add('is-visible'));
+  }
+
+  // Subtle parallax on hero blueprint motif
+  const heroPlan = document.querySelector('.hero-plan');
+  if (heroPlan && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    window.addEventListener('scroll', () => {
+      const y = window.scrollY;
+      heroPlan.style.transform = `translateY(${y * 0.15}px)`;
+    }, { passive: true });
+  }
+</script>
 </body>
 </html>
