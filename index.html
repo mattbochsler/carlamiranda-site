@@ -142,7 +142,12 @@
   /* ABORDAGEM */
   .approach{display:grid;grid-template-columns:280px 1fr;gap:56px;align-items:start;}
   @media (max-width:800px){.approach{grid-template-columns:1fr;}}
-  .approach img{border-radius:2px;filter:sepia(8%) saturate(92%);}
+  .approach img{
+    border-radius:18px;
+    filter:sepia(8%) saturate(92%);
+    -webkit-mask-image:linear-gradient(180deg, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
+    mask-image:linear-gradient(180deg, rgba(0,0,0,1) 75%, rgba(0,0,0,0) 100%);
+  }
   .approach-copy p{margin-bottom:18px;color:rgba(33,29,26,0.86);}
 
   /* PATTERN LIST */
