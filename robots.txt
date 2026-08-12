@@ -1,0 +1,23 @@
+# Allow ordinary search indexing and AI search discovery by default.
+User-agent: *
+Disallow:
+
+# OpenAI model-training crawler.
+User-agent: GPTBot
+Disallow: /
+
+# Anthropic model-development / training crawler.
+User-agent: ClaudeBot
+Disallow: /
+
+# Google extended-use token for Gemini training/grounding controls.
+User-agent: Google-Extended
+Disallow: /
+
+# Apple foundation-model training crawler.
+User-agent: Applebot-Extended
+Disallow: /
+
+# Common Crawl dataset crawler.
+User-agent: CCBot
+Disallow: /
