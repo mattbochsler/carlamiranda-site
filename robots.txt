@@ -21,3 +21,5 @@ Disallow: /
 # Common Crawl dataset crawler.
 User-agent: CCBot
 Disallow: /
+
+Sitemap: https://mattbochsler.github.io/carlamiranda-site/sitemap.xml
